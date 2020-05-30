@@ -1,0 +1,117 @@
+* {
+    box-sizing: border-box;
+  }
+
+
+.card {
+    padding-right: 10px;
+    padding-left: 10px;
+    border: 3px solid rgba(0,0,0,0);
+    height: 400px;
+    width: 350px;
+    
+
+}
+
+.card:hover {
+    padding-right: 10px;
+    padding-left: 10px;
+    border: 3px solid rgb(51, 153, 127);
+}
+
+.navbar {
+    background-color: #00ffcc;
+    height: 10%;
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    border: 2px solid #169f84;
+    
+}
+
+.search {
+    width: 50%;
+    margin-right: 20%;
+    float: left;
+    
+}
+
+
+.sidenav {
+    border-right: 2px solid gray;
+    height: 100%;
+    width: 15%;
+    float: left;
+    position: fixed;
+    z-index: 1;
+    background-color: #fff;
+    overflow-x: auto;
+  }
+.sidenav form {
+    margin-top: 70%;
+    /* float: left; */
+    /* color: aliceblue; */
+    font-family: Helvetica;
+}
+
+.sidenav h5 {
+    margin-left: 10%;
+}
+
+
+.sidenav label {
+ margin-left: 10%;
+ font-size: 15px;
+}
+
+.sidenav a:hover {
+    color: #064579;
+  }
+
+.p {
+    max-width: 200px;    
+}
+
+a { 
+    text-decoration: none; /* Убираем подчеркивание у ссылок */
+    color: #000;
+   }
+
+a:hover { 
+    text-decoration: none; /* Убираем подчеркивание у ссылок */
+    color: #000;
+   }
+
+h1 {
+    margin-left: 100px;
+    font-size: 56px;
+}
+
+.main {
+    margin-top: 5%;
+    width: 80%;
+    float: left;
+    margin-left: 300px;
+    margin-right: 100px;
+}
+
+button {
+    font-size: medium;
+}
+
+.form-inline {
+    margin: 0  auto;
+}
+
+.buttons {
+    margin-top: 50px;
+}
+
+.card-image-wrap {
+    height: 150px;
+}
+
+.pagination {
+    float: left;
+    margin-left: 50%;
+}
