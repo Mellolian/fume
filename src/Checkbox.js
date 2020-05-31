@@ -7,7 +7,7 @@ function Checkbox(props) {
       <input
         type="checkbox"
         name={props.label}
-        onChange={(e) => props.handleCheckboxChange(e, props.label)}
+        onChange={(e) => props.handleCheckboxChange(e)}
         className="form-check-input"
       />
       {props.label} - {props.length}

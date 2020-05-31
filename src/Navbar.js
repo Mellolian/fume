@@ -12,7 +12,7 @@ export default function CustomNavbar(props) {
       <Nav className="mr-auto">
      </Nav>
      <div className="search">
-<Search props={props} handleInputChange={props.handleInputChange}/></div>
+<Search props={props} handleInputChange={(e) => props.handleInputChange(e)}/></div>
     </Navbar.Collapse>
   </Navbar>)
 }

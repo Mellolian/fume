@@ -4,7 +4,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
   const pageNumbers = [];
   let pageLimit = Math.floor(totalPosts/postsPerPage);
   if (Math.floor(totalPosts/postsPerPage) > 5) {
-    console.log(Math.ceil(totalPosts/postsPerPage))
+    
     pageLimit = 5;
   }
     

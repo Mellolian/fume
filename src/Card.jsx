@@ -13,7 +13,7 @@ function CustomCard(props) {
         <div className='card-image-wrap'><Card.Img src={card.imageUrl}/> </div>
         <Card.Body>
         <Card.Title><a href={card.href} ><TextTruncate
-    line={2}
+    line={3}
     element="span"
     truncateText="…"
     text={card.name}

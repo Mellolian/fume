@@ -23,9 +23,10 @@ class Search extends Component {
       <form style={{width: '100%'}}>
         <input 
         className="form-control"
+        type="text"
           placeholder="Поиск"
           ref={input => this.search = input}
-          onChange={this.props.handleInputChange}
+          onChange={(e) => this.props.handleInputChange(e)}
         />
         <p>{this.state.query}</p>
       </form>
