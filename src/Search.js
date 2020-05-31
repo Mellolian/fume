@@ -25,8 +25,8 @@ class Search extends Component {
         className="form-control"
         type="text"
           placeholder="Поиск"
-          ref={input => this.search = input}
-          onChange={(e) => this.props.handleInputChange(e)}
+          // ref={input => {this.search = input}}
+          onChange={this.props.handleInputChange}
         />
         <p>{this.state.query}</p>
       </form>

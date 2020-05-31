@@ -15,7 +15,7 @@ class App extends React.Component {
       page: [], 
       activePage: 1,
     itemsPerPage: 8,
-  filteredInfo : [],
+  filteredInfo : data,
 brands: [],
 query : '',
 isSelected : {},
@@ -77,120 +77,115 @@ isSelected : {},
   }    
 
     handleInputChange = (e) => {
-      let res;
-  
-      console.log(e.target)
-      if (e.target.value.length > 0) {
-        console.log('handleInputChange')
-        console.log(e.target.value)
-        this.setState({query:e.target.value})
-        res = data.filter(item => ((item.name).toLowerCase()).indexOf(e.target.value.toLowerCase()) !== -1)       
-      } else {
-        console.log('handleInputChange')
-        console.log(this.state.query)
-        res = this.state.info
-      }
-      return res
-    }       
+        let res;
+
+        if (e.target.value.length > 0) {
+            console.log('handleInputChange')
+            console.log(e.target.value)
+            this.setState({query:e.target.value})
+            res = this.state.info.filter(item => (item.name).toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1)       
+        } else {
+            console.log('handleInputChange')
+            console.log(this.state.query)
+            res = this.state.filteredInfo
+        }
+        return res
+        }       
       
-      
-    // filterByInput (){
-      
-      
-      // this.setState((state) => {return{page: this.state.filteredInfo.slice((this.state.activePage)*this.state.itemsPerPage, (this.state.activePage+1)*this.state.itemsPerPage)}}, () => 
-      
-      //   })
-      // }
 
     handleCheckboxChange(event) { 
-      let label = event.target.name
-      let isSelected = this.state.isSelected
-      isSelected[label] = event.target.checked
-      this.setState({isSelected})
-      let validFilters = []
-      validFilters = Object.keys(this.state.isSelected).filter(key => this.state.isSelected[key]) 
-      console.log(validFilters)     
-      this.setState({filters: validFilters}, () => console.log(validFilters))
-      return validFilters      
+        let label = event.target.name
+        let isSelected = this.state.isSelected
+        isSelected[label] = event.target.checked
+        this.setState({isSelected})
+        let validFilters = []
+        validFilters = Object.keys(this.state.isSelected).filter(key => this.state.isSelected[key]) 
+        console.log(validFilters)     
+        this.setState({filters: validFilters})
+        return validFilters      
     }
 
     handleAll(e) {
         let filters = this.state.filters;
         let result = data;
-        let res = this.state.filteredInfo;
+        let res = this.state.info;
         let arrs = data;
-        console.log('--------------------------------------------------')
-        if (e.target !== undefined) {
-            console.log('target is defined')
-            if (e.target.type === 'checkbox') {
-                console.log('checkbox')
-                filters = this.handleCheckboxChange(e)                
-                this.setState({filters: filters})
-            
-            } else if (e.target.type === "text"){
-                console.log('text')
-                res = this.handleInputChange(e)
-                this.setState({filteredInfo : res}, () => console.log(res))
-                console.log(res)
-            } else {
-            console.log('ERROR')
-            }
-        
-        console.log(res)
-        
-        if (filters.length > 0 && this.state.query.length === 0) {
-            console.log('only filters')
+        console.clear()
+
+        if (e.target.type === 'checkbox') {
+            console.log('checkbox')
+            filters = this.handleCheckboxChange(e)                
+            this.setState({filters: filters})
             let temp = []
             for (let i=0; i < filters.length;i++) {
                 temp.push(result.filter(item => item.brand === filters[i]))
                 }
             console.log(temp)
             arrs = temp.flat()
-            this.setState({filteredInfo: arrs}, () => this.renderNewPage()) 
-                   
-        } else if (filters.length === 0 && this.state.query.length > 0) {
-            console.log('only query')
-            arrs = this.state.filteredInfo.filter(result => ((result.name).toLowerCase()).indexOf(this.state.query.toLowerCase()) !== -1);
-
-            this.setState({filteredInfo: arrs, activePage: 1}, () => this.renderNewPage)
-
-          console.log(arrs)           
-      
-        } else if (this.state.filters.length === 0 && this.state.query.length === 0) {
-            arrs = data
-            console.log('blank result')
-            this.renderNewPage()
-        } else if (this.state.filters.length > 0 && this.state.query.length > 0) {     
-            console.log('both filters and query')            
-            let temp = this.state.filteredInfo.filter(item => ((item.name).toLowerCase()).indexOf(this.state.query.toLowerCase()) !== -1)
-            arrs = temp.filter(item => this.state.filters.includes(item.brand))
             this.setState(
-          { filteredInfo: arrs }, () => this.renderNewPage())
+            { filteredInfo: arrs })
+
         
-            console.log('arrs is')
-            console.log(arrs)
-        }
-        console.log('result is')
-        console.log(arrs)
-        // this.setState({filteredInfo : arrs}, () => this.renderNewPage())
+        } else if (e.target.type === "text"){
+            console.log('text')
+            res = this.handleInputChange(e)
+            this.setState({filteredInfo : res})
+            console.log(res)
         } else {
-          arrs = data}
+        console.log('ERROR')
+        }
+    
+    if (filters.length > 0 && this.state.query.length === 0) {
+        console.log('only filters')
+        let temp = []
+        for (let i=0; i < filters.length;i++) {
+            temp.push(result.filter(item => item.brand === filters[i]))
+            }
+        console.log(temp)
+        arrs = temp.flat()
+        this.setState({filteredInfo: arrs}) 
+                
+    } else if (filters.length === 0 && this.state.query.length > 0) {
+        console.log('only query')
+        arrs = this.state.info.filter(result => ((result.name).toLowerCase()).indexOf(this.state.query.toLowerCase()) !== -1);
+
+        this.setState({filteredInfo: arrs, activePage: 1})
+
+        console.log(arrs)           
+    
+    } else if (this.state.filters.length === 0 && this.state.query.length === 0) {
+        arrs = data
+        console.log('blank result')
+    } else if (this.state.filters.length > 0 && this.state.query.length > 0){     
+        console.log('both filters and query')            
+        let temp = this.state.info.filter(item => ((item.name).toLowerCase()).indexOf(this.state.query.toLowerCase()) !== -1)
+        arrs = temp.filter(item => filters.includes(item.brand))
+        this.setState(
+        { filteredInfo: arrs })
+    
+        console.log('arrs is')
+        console.log(arrs)
+    }
+    console.log('result is')
+    console.log(arrs)
+
+
         
         if (arrs.length > 0) {
             console.log(arrs)
             this.setState(
-                { filteredInfo: arrs }, () => this.renderNewPage()
-            )}
+                { filteredInfo: arrs }, () => this.renderNewPage(this.state)
+            )
             console.log(this.state)
-        }
-            
-        
-    
-        
-        
+            this.renderNewPage(this.state)
+        } else if (this.state.filters.length ===0 && this.state.query.length === 0) {
+            console.log('clearing all filters')
+                this.setState({filteredInfo: data})
+            }
+        console.log(this.state)
 
-      // }
-    
+        }
+  
 
     setFilters() {
       let validFilters = []
@@ -198,54 +193,29 @@ isSelected : {},
       this.setState({filters: validFilters})                     
     }
   
-
-    filterInfo() {
-      let arr = []
-      
-      if (this.state.filters.length > 0 && this.state.query.length > 0) {
-        console.log('рендерим результат')
-        for (let i=0; i<this.state.filters.length; i++) {        
-          arr.push(this.state.filteredInfo.filter(item => item.brand.toLowerCase() === this.state.filters[i].toLowerCase()))           
-        }    
-        this.setState({filteredInfo:arr.flat()}, () => this.renderNewPage())  
-      } else if (this.state.query.length === 0 && this.state.filters.length === 0) {
-        console.log('query is none')
-        console.log(this.state.filters.length)
-        this.setState(
-        { filteredInfo: this.state.info }, () => this.renderNewPage()
-      )} else if (this.state.query.length > 0) {
-        console.log('рендерим результат без фильтров')
-      this.renderNewPage()
-      }
-    }
-
     handlePageChange(pageNumber) {
       console.log(`active page is ${pageNumber}`);
-      this.setState({activePage: pageNumber}, () => this.renderNewPage());    
+      this.setState({activePage: pageNumber});    
     }
 
-    renderNewPage() {
-        console.log(this.state.filteredInfo)
+    renderNewPage(newState) {
+        console.log(newState)
       this.setState(
-        {page: this.state.filteredInfo
+        {page: newState.filteredInfo
           .filter(card => card.price < card.rawPrice)
-          .slice((this.state.activePage-1)*this.state.itemsPerPage, 
-          (this.state.activePage)*this.state.itemsPerPage)}
-      , () => this.setState({activePage: 1}, () => console.log()))
+          .slice((newState.activePage-1)*newState.itemsPerPage, 
+          (newState.activePage)*newState.itemsPerPage)}
+      , () => this.setState({activePage: 1}))
       
     }
 
     setCurrentPage(number){
-      this.setState({activePage: number}, () => this.renderNewPage())
+      this.setState({activePage: number})
     }
     
 
-  render() {
-    const indexOfLastPost = this.state.activePage * this.state.itemsPerPage;
-    const indexOfFirstPost = indexOfLastPost - this.state.itemsPerPage;
+  render() {  
 
-  
-    // Change page
     const paginate = pageNumber => this.setCurrentPage(pageNumber);
     return (
     <div className="App">
