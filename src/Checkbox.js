@@ -1,6 +1,7 @@
 import React from "react";
 
 function Checkbox(props) {
+  if (props)
   return (
   <div className="form-check" key={props.label}>
     <label>

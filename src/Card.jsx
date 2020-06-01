@@ -10,7 +10,7 @@ function CustomCard(props) {
        
          <Card className='card' body={card.name} key={card.id}>
          
-        <div className='card-image-wrap'><Card.Img src={card.imageUrl}/> </div>
+        <div className='card-image-wrap'><Card.Img alt={card.name} src={card.imageUrl}/> </div>
         <Card.Body>
         <Card.Title><a href={card.href} ><TextTruncate
     line={3}

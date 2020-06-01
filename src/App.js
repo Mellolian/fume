@@ -190,7 +190,7 @@ class App extends React.Component {
     } else if (filters.length == 0 && query !== '') {
         console.log(filters)
       console.log("only query");
-      console.log('query is '+query+' wtf?')
+      console.log('query is '+ query +' wtf?')
       arrs = data.filter(
         (piece) => piece.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
       );
@@ -266,8 +266,7 @@ class App extends React.Component {
           .slice(
             (newState.activePage - 1) * newState.itemsPerPage,
             newState.activePage * newState.itemsPerPage
-          ),
-          activePage: 1,
+          )
       },
       () =>
         console.log(this.state)
@@ -275,18 +274,20 @@ class App extends React.Component {
     );
   }
 
-  setCurrentPage(number) {
+  setCurrentPage(event) {  
+
+    console.log((event.target.name))
     this.setState({
-      activePage: number,
-    });
+      activePage: parseInt(event.target.name),
+    }, () => this.renderNewPage(this.state));
   }
 
   render() {
-    const paginate = (pageNumber) => this.setCurrentPage(pageNumber);
+    
     return (
       <div className="App">
         <CustomNavbar
-          info={this.state.info}
+          info={this.state.filteredInfo}
           handleInputChange={this.handleAll}
         />{" "}
         <Sidenav
@@ -304,7 +305,7 @@ class App extends React.Component {
           <Pagination
             postsPerPage={this.state.itemsPerPage}
             totalPosts={this.state.filteredInfo.length}
-            paginate={paginate}
+            paginate={this.setCurrentPage}
             currentPage={this.state.activePage}
           />
         ) : (
