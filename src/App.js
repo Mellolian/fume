@@ -30,7 +30,7 @@ class App extends React.Component {
     this.setFilters = this.setFilters.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.setCurrentPage = this.setCurrentPage.bind(this);
-
+    this.setFilteredInfo = this.setFilteredInfo.bind(this);
     this.handleAll = this.handleAll.bind(this);
   }
 
@@ -103,24 +103,24 @@ class App extends React.Component {
   }
 
   handleInputChange = (e) => {
-    let res;
+
+    let query ='';
 
     if (e.target.value.length > 0) {
       console.log("handleInputChange");
-      console.log(e.target.value);
+      query = (e.target.value);
       this.setState({
         query: e.target.value,
       });
-      res = this.state.info.filter(
-        (item) =>
-          item.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1
-      );
-    } else if (e.target.value === 0) {
+    } else if (e.target.value == 0) {
+        let query= ''
+        this.setState({
+            query: query
+        })
       console.log("handleInputChange");
       console.log(this.state.query);
-      res = this.state.filteredInfo;
     }
-    return res;
+    return query;
   };
 
   handleCheckboxChange(event) {
@@ -137,92 +137,90 @@ class App extends React.Component {
     console.log(validFilters);
     this.setState({
       filters: validFilters,
-    });
-    return validFilters;
+    }, () => console.log(this.state.filters));
+    
+    return validFilters
+  }
+
+  setFilteredInfo(filters) {
+    let arrs = [];
+    for (let i = 0; i < filters.length; i++) {
+      arrs.push(data.filter((item) => item.brand === filters[i]));
+    }
+    console.log(arrs);
+    arrs = arrs.flat();
+    this.setState({
+      filteredInfo: arrs,
+    }, () => console.log(arrs));
+    return arrs
   }
 
   handleAll(e) {
-    let filters = this.state.filters;
-    let result = data;
-    let res = this.state.info;
-    let arrs = data;
     console.clear();
+    let filters = this.state.filters;
+    let query = this.state.query;
+    let arrs = this.state.filteredInfo;
 
     if (e.target.type === "checkbox") {
       console.log("checkbox");
       filters = this.handleCheckboxChange(e);
       this.setState({
         filters: filters,
-      });
-      let temp = [];
-      for (let i = 0; i < filters.length; i++) {
-        temp.push(result.filter((item) => item.brand === filters[i]));
-      }
-      console.log(temp);
-      arrs = temp.flat();
-      this.setState({
-        filteredInfo: arrs,
-      });
+      }, () => console.log(filters));
     } else if (e.target.type === "text") {
       console.log("text");
-      res = this.handleInputChange(e);
+      query = this.handleInputChange(e);
+      console.log(query);
       this.setState({
-        filteredInfo: res,
+        query: query,
       });
-      console.log(res);
-    } else {
-      console.log("ERROR");
+      console.log(query);
     }
 
-    if (filters.length > 0 && this.state.query.length === 0) {
+    if (filters !== undefined && filters.length > 0 && query == '') {
       console.log("only filters");
-      let temp = [];
-      for (let i = 0; i < filters.length; i++) {
-        temp.push(result.filter((item) => item.brand === filters[i]));
-      }
-      console.log(temp);
-      arrs = temp.flat();
-      this.setState({
-        filteredInfo: arrs,
-      });
-    } else if (filters.length === 0 && this.state.query.length > 0) {
-      console.log("only query");
-      arrs = this.state.info.filter(
-        (result) =>
-          result.name.toLowerCase().indexOf(this.state.query.toLowerCase()) !==
-          -1
-      );
-
+      console.log(filters)
+      arrs = this.setFilteredInfo(filters);
       this.setState({
         filteredInfo: arrs,
         activePage: 1,
-      });
+      },
+      () => this.renderNewPage(this.state));
 
-      console.log(arrs);
-    } else if (
-      this.state.filters.length === 0 &&
-      this.state.query.length === 0
-    ) {
-      arrs = data;
-      console.log("blank result");
-    } else if (this.state.filters.length > 0 && this.state.query.length > 0) {
-      console.log("both filters and query");
-      let temp = this.state.info.filter(
-        (item) =>
-          item.name.toLowerCase().indexOf(this.state.query.toLowerCase()) !== -1
+    } else if (filters.length == 0 && query !== '') {
+        console.log(filters)
+      console.log("only query");
+      console.log('query is '+query+' wtf?')
+      arrs = data.filter(
+        (piece) => piece.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
       );
-      arrs = temp.filter((item) => filters.includes(item.brand));
+      console.log(arrs);
       this.setState({
         filteredInfo: arrs,
-      });
+        activePage: 1,
+      },
+      () => this.renderNewPage(this.state));
 
-      console.log("arrs is");
-      console.log(arrs);
+    } else if ((filters.length == 0 || filters == undefined) && query == '') {
+      arrs = data;
+      console.log("blank result");
+
+    } else if (filters.length > 0 && query.length > 0) {
+      console.log("both filters and query");
+      arrs = data.filter(
+        (piece) => piece.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      );
+      arrs = arrs.filter((item) => filters.includes(item.brand));
+      this.setState({
+        filteredInfo: arrs,
+      },
+      () => this.renderNewPage(this.state));
     }
+
     console.log("result is");
     console.log(arrs);
 
-    if (arrs.length > 0) {
+    if (arrs !== undefined && arrs.length > 0) {
       console.log(arrs);
       this.setState(
         {
@@ -230,18 +228,16 @@ class App extends React.Component {
         },
         () => this.renderNewPage(this.state)
       );
-      console.log(this.state);
-      this.renderNewPage(this.state);
     } else if (
-      this.state.filters.length === 0 &&
+      (filters == [] || filters == undefined) &&
       this.state.query.length === 0
     ) {
       console.log("clearing all filters");
       this.setState({
         filteredInfo: data,
-      });
+      },
+      () => this.renderNewPage(this.state));
     }
-    console.log(this.state);
   }
 
   setFilters() {
@@ -262,7 +258,7 @@ class App extends React.Component {
   }
 
   renderNewPage(newState) {
-    console.log(newState);
+    console.log(newState.filteredInfo);
     this.setState(
       {
         page: newState.filteredInfo
@@ -271,11 +267,11 @@ class App extends React.Component {
             (newState.activePage - 1) * newState.itemsPerPage,
             newState.activePage * newState.itemsPerPage
           ),
+          activePage: 1,
       },
       () =>
-        this.setState({
-          activePage: 1,
-        })
+        console.log(this.state)
+
     );
   }
 
