@@ -20,7 +20,7 @@ function CustomCard(props) {
     textTruncateChild={<span>Подробнее</span>}
 /></a></Card.Title>
 
-        <div style={{fontSize: '15px'}}>
+        <div style={{fontSize: '20px'}}>
           <b>{card.price} ₽ </b>
        <p >
          <s>{card.rawPrice} ₽</s> Скидка <b>{Math.floor((1-(card.price/card.rawPrice))*100)}%</b>

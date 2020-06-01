@@ -2,6 +2,13 @@
     box-sizing: border-box;
   }
 
+.main {
+    width: 80%;
+    float: left;
+    margin-left: 300px;
+    margin-right: 100px;
+    font-family: "Open Sans";
+}
 
 .card {
     margin: 0 auto;
@@ -9,14 +16,16 @@
     height: 400px;
     width: 300px;
     font-family: "Open Sans";
+    padding-right: 10px;
 }
 
 .card-body {
-    padding: 0 0 0 0;
+
     border: 3px solid rgba(0,0,0,0);
     height: 100px;
     width: 300px;
-    font-family: "Open Sans";
+    padding: 0;
+    
 }
 
 .card:hover {
@@ -68,7 +77,7 @@
     height: 90%;
     width: 15%;
     margin-bottom: 0;
-    margin-top: auto;
+    /* margin-top: auto; */
     float: left;
     position: absolute;
     z-index: 1;
@@ -93,9 +102,7 @@
  font-size: 15px;
 }
 
-.sidenav a:hover {
-    color: #064579;
-  }
+
 
 .p {
     max-width: 200px;    
@@ -116,13 +123,7 @@ h1 {
     font-size: 56px;
 }
 
-.main {
-    margin-top: 5%;
-    width: 80%;
-    float: left;
-    margin-left: 300px;
-    margin-right: 100px;
-}
+
 
 button {
     font-size: medium;
@@ -139,4 +140,5 @@ button {
 .pagination {
     float: left;
     margin-left: 50%;
+    
 }

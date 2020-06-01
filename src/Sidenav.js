@@ -3,7 +3,6 @@ import Brands from "./Brands";
 import Checkbox from "./Checkbox";
 
 export default function Sidenav(props) {
-  let brr = Brands(props);
   let arr = [];
   const listToDisplay = (props) => {
     Object.keys(Brands(props)).forEach((key) =>
@@ -13,7 +12,7 @@ export default function Sidenav(props) {
             label={key}
             handleCheckboxChange={props.handleCheckboxChange}
             isSelected={props.isSelected}
-            length={brr[key].length}
+            length={Brands(props).length}
           />
         </p>
       )
