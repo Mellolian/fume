@@ -12,7 +12,7 @@ export default function Sidenav(props) {
             label={key}
             handleCheckboxChange={props.handleCheckboxChange}
             isSelected={props.isSelected}
-            length={Brands(props)[key].length}
+            length={Brands(props).length}
           />
         </p>
       )
