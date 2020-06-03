@@ -102,7 +102,10 @@
  font-size: 15px;
 }
 
-
+#not-found {
+    position: relative;
+    margin-left: 20%;
+}
 
 .p {
     max-width: 200px;    

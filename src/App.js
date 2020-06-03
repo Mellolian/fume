@@ -292,13 +292,13 @@ class App extends React.Component {
         />{" "}
         <Sidenav
           info={this.state.info}
-          handleCheckboxChange={this.handleAll}
+          git revert HEAD          handleCheckboxChange={this.handleAll}
           isSelected={this.state.isSelected}
         />{" "}
         <div className="main">
           {" "}
           <Grid container spacing={2} justify="space-evenly">
-            <CustomCard info={this.state.page} />
+           {this.state.page.length > 0 ? <CustomCard info={this.state.page} /> : <h3 id='not-found'>К сожалению, товаров соответствующих условиям не найдено.</h3>}
           </Grid>{" "}
         </div>
         {this.state.filteredInfo.length > this.state.itemsPerPage ? (
