@@ -9,7 +9,7 @@ function CustomDropdown(props) {
 </Dropdown.Toggle>
 <Dropdown.Menu>
   <Dropdown.Item onClick={props.sortByPrice}>Сортировать по цене</Dropdown.Item>
-  <Dropdown.Item onClick={props.sortByName}>Сортировать по алфавиту</Dropdown.Item>
+  <Dropdown.Item onClick={props.sortByBrand}>Сортировать по алфавиту</Dropdown.Item>
   <Dropdown.Item onClick={props.sortByDiscount}>Сортировать по скидке</Dropdown.Item>
 </Dropdown.Menu>
 </Dropdown>)
