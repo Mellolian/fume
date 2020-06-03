@@ -10,15 +10,15 @@ function CustomCard(props) {
        
          <Card className='card' body={card.name} key={card.id}>
          
-        <div className='card-image-wrap'><Card.Img alt={card.name} src={card.imageUrl}/> </div>
+        <div className='card-image-wrap'><a href={card.href} ><Card.Img alt={card.name} src={card.imageUrl}/></a> </div>
         <Card.Body>
-        <Card.Title><a href={card.href} ><TextTruncate
+        <Card.Title><TextTruncate
     line={3}
     element="span"
     truncateText="…"
     text={card.name}
     textTruncateChild={<span>Подробнее</span>}
-/></a></Card.Title>
+/></Card.Title>
 
         <div style={{fontSize: '20px'}}>
           <b>{card.price} ₽ </b>
