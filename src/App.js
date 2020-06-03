@@ -286,21 +286,24 @@ class App extends React.Component {
     
     return (
       <div className="App">
-        <CustomNavbar
+<CustomNavbar
           info={this.state.filteredInfo}
           handleInputChange={this.handleAll}
         />{" "}
+
+        <div className="col-8 main">
+
         <Sidenav
           info={this.state.info}
-          git revert HEAD          handleCheckboxChange={this.handleAll}
+       handleCheckboxChange={this.handleAll}
           isSelected={this.state.isSelected}
         />{" "}
-        <div className="main">
+        
           {" "}
-          <Grid container spacing={2} justify="space-evenly">
+          <div className='cards'><Grid container spacing={2} justify="space-evenly">
            {this.state.page.length > 0 ? <CustomCard info={this.state.page} /> : <h3 id='not-found'>К сожалению, товаров соответствующих условиям не найдено.</h3>}
           </Grid>{" "}
-        </div>
+        
         {this.state.filteredInfo.length > this.state.itemsPerPage ? (
           <Pagination
             postsPerPage={this.state.itemsPerPage}
@@ -311,6 +314,7 @@ class App extends React.Component {
         ) : (
           <div />
         )}{" "}
+      </div></div>
       </div>
     );
   }
