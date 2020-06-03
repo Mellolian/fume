@@ -7,7 +7,7 @@
     float: left;
     margin-left: 300px;
     margin-right: 100px;
-    font-family: "Open Sans";
+    font-family: "Kazimir,'Helvetica CY',Arial,sans-serif";
 }
 
 .card {
@@ -15,7 +15,6 @@
     border: 3px solid rgba(0,0,0,0);
     height: 400px;
     width: 300px;
-    font-family: "Open Sans";
     padding-right: 10px;
 }
 
@@ -24,7 +23,7 @@
     border: 3px solid rgba(0,0,0,0);
     height: 100px;
     width: 300px;
-    padding: 0;
+    padding: 10px;
     
 }
 
@@ -65,10 +64,8 @@
     }
 
 .search {
-    width: 50%;
-    margin-right: 20%;
-    float: left;
-    
+    width: 40%;    
+    margin-left: 10%;    
 }
 
 .sidenav {
@@ -123,10 +120,8 @@ h1 {
     font-size: 56px;
 }
 
-
-
-button {
-    font-size: medium;
+.button {
+    font-size: 200px;
 }
 
 .form-inline {
