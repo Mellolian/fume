@@ -103,20 +103,19 @@ class App extends React.Component {
   }
 
   handleInputChange = (e) => {
-
-    let query ='';
+    let query = "";
 
     if (e.target.value.length > 0) {
       console.log("handleInputChange");
-      query = (e.target.value);
+      query = e.target.value;
       this.setState({
         query: e.target.value,
       });
     } else if (e.target.value == 0) {
-        let query= ''
-        this.setState({
-            query: query
-        })
+      let query = "";
+      this.setState({
+        query: query,
+      });
       console.log("handleInputChange");
       console.log(this.state.query);
     }
@@ -135,11 +134,14 @@ class App extends React.Component {
       (key) => this.state.isSelected[key]
     );
     console.log(validFilters);
-    this.setState({
-      filters: validFilters,
-    }, () => console.log(this.state.filters));
-    
-    return validFilters
+    this.setState(
+      {
+        filters: validFilters,
+      },
+      () => console.log(this.state.filters)
+    );
+
+    return validFilters;
   }
 
   setFilteredInfo(filters) {
@@ -149,10 +151,13 @@ class App extends React.Component {
     }
     console.log(arrs);
     arrs = arrs.flat();
-    this.setState({
-      filteredInfo: arrs,
-    }, () => console.log(arrs));
-    return arrs
+    this.setState(
+      {
+        filteredInfo: arrs,
+      },
+      () => console.log(arrs)
+    );
+    return arrs;
   }
 
   handleAll(e) {
@@ -164,9 +169,12 @@ class App extends React.Component {
     if (e.target.type === "checkbox") {
       console.log("checkbox");
       filters = this.handleCheckboxChange(e);
-      this.setState({
-        filters: filters,
-      }, () => console.log(filters));
+      this.setState(
+        {
+          filters: filters,
+        },
+        () => console.log(filters)
+      );
     } else if (e.target.type === "text") {
       console.log("text");
       query = this.handleInputChange(e);
@@ -177,44 +185,47 @@ class App extends React.Component {
       console.log(query);
     }
 
-    if (filters !== undefined && filters.length > 0 && query == '') {
+    if (filters !== undefined && filters.length > 0 && query == "") {
       console.log("only filters");
-      console.log(filters)
+      console.log(filters);
       arrs = this.setFilteredInfo(filters);
-      this.setState({
-        filteredInfo: arrs,
-        activePage: 1,
-      },
-      () => this.renderNewPage(this.state));
-
-    } else if (filters.length == 0 && query !== '') {
-        console.log(filters)
+      this.setState(
+        {
+          filteredInfo: arrs,
+          activePage: 1,
+        },
+        () => this.renderNewPage(this.state)
+      );
+    } else if (filters.length == 0 && query !== "") {
+      console.log(filters);
       console.log("only query");
-      console.log('query is '+ query +' wtf?')
+      console.log("query is " + query + " wtf?");
       arrs = data.filter(
         (piece) => piece.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
       );
       console.log(arrs);
-      this.setState({
-        filteredInfo: arrs,
-        activePage: 1,
-      },
-      () => this.renderNewPage(this.state));
-
-    } else if ((filters.length == 0 || filters == undefined) && query == '') {
+      this.setState(
+        {
+          filteredInfo: arrs,
+          activePage: 1,
+        },
+        () => this.renderNewPage(this.state)
+      );
+    } else if ((filters.length == 0 || filters == undefined) && query == "") {
       arrs = data;
       console.log("blank result");
-
     } else if (filters.length > 0 && query.length > 0) {
       console.log("both filters and query");
       arrs = data.filter(
         (piece) => piece.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
       );
       arrs = arrs.filter((item) => filters.includes(item.brand));
-      this.setState({
-        filteredInfo: arrs,
-      },
-      () => this.renderNewPage(this.state));
+      this.setState(
+        {
+          filteredInfo: arrs,
+        },
+        () => this.renderNewPage(this.state)
+      );
     }
 
     console.log("result is");
@@ -233,10 +244,12 @@ class App extends React.Component {
       this.state.query.length === 0
     ) {
       console.log("clearing all filters");
-      this.setState({
-        filteredInfo: data,
-      },
-      () => this.renderNewPage(this.state));
+      this.setState(
+        {
+          filteredInfo: data,
+        },
+        () => this.renderNewPage(this.state)
+      );
     }
   }
 
@@ -266,55 +279,56 @@ class App extends React.Component {
           .slice(
             (newState.activePage - 1) * newState.itemsPerPage,
             newState.activePage * newState.itemsPerPage
-          )
+          ),
       },
-      () =>
-        console.log(this.state)
-
+      () => console.log(this.state)
     );
   }
 
-  setCurrentPage(event) {  
-
-    console.log((event.target.name))
-    this.setState({
-      activePage: parseInt(event.target.name),
-    }, () => this.renderNewPage(this.state));
+  setCurrentPage(event) {
+    console.log(event.target.name);
+    this.setState(
+      {
+        activePage: parseInt(event.target.name),
+      },
+      () => this.renderNewPage(this.state)
+    );
   }
 
   render() {
-    
     return (
       <div className="App">
-<CustomNavbar
+        <CustomNavbar
           info={this.state.filteredInfo}
           handleInputChange={this.handleAll}
-        />{" "}
+        />
 
-        <div className="col-8 main">
-
-        <Sidenav
-          info={this.state.info}
-       handleCheckboxChange={this.handleAll}
-          isSelected={this.state.isSelected}
-        />{" "}
-        
-          {" "}
-          <div className='cards'><Grid container spacing={2} justify="space-evenly">
-           {this.state.page.length > 0 ? <CustomCard info={this.state.page} /> : <h3 id='not-found'>К сожалению, товаров соответствующих условиям не найдено.</h3>}
-          </Grid>{" "}
-        
-        {this.state.filteredInfo.length > this.state.itemsPerPage ? (
-          <Pagination
-            postsPerPage={this.state.itemsPerPage}
-            totalPosts={this.state.filteredInfo.length}
-            paginate={this.setCurrentPage}
-            currentPage={this.state.activePage}
-          />
-        ) : (
-          <div />
-        )}{" "}
-      </div></div>
+        <div className="container">
+          <Sidenav
+            info={this.state.info}
+            handleCheckboxChange={this.handleAll}
+            isSelected={this.state.isSelected}
+          />{" "}
+          <div className="cards">
+            {this.state.page.length > 0 ? (
+              <CustomCard info={this.state.page} />
+            ) : (
+              <h3 id="not-found">
+                К сожалению, товаров соответствующих условиям не найдено.
+              </h3>
+            )}{" "}
+            {this.state.filteredInfo.length > this.state.itemsPerPage ? (
+              <Pagination
+                postsPerPage={this.state.itemsPerPage}
+                totalPosts={this.state.filteredInfo.length}
+                paginate={this.setCurrentPage}
+                currentPage={this.state.activePage}
+              />
+            ) : (
+              <div />
+            )}
+          </div>
+        </div>
       </div>
     );
   }

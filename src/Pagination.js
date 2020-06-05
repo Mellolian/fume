@@ -10,13 +10,12 @@ function Pagination(props) {
   if (props.currentPage <= pageLimit) {
     pageNumbers = [];
     firstPage = 1;
-    console.log(props.currentPage);
     if (
       Math.ceil(props.totalPosts / props.postsPerPage) >
       props.currentPage + pageLimit
     ) {
       lastPage = props.currentPage + pageLimit;
-      console.log(lastPage);
+
     } else {
       lastPage = Math.ceil(props.totalPosts / props.postsPerPage);
     }
@@ -33,13 +32,11 @@ function Pagination(props) {
       props.currentPage + pageLimit
     ) {
       lastPage = props.currentPage + pageLimit;
-      console.log(lastPage);
+
     } else {
       lastPage = Math.ceil(props.totalPosts / props.postsPerPage);
     }
-    console.log(props.currentPage);
-    console.log(firstPage);
-    console.log(lastPage);
+
     for (let i = firstPage; i <= lastPage; i++) {
       pageNumbers.push(i);
     }

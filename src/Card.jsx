@@ -1,37 +1,41 @@
-import React from 'react';
-import {Card} from 'react-bootstrap';
-import {Grid} from '@material-ui/core';
-import TextTruncate from 'react-text-truncate';
+import React from "react";
+import TextTruncate from "react-text-truncate";
 
 function CustomCard(props) {
-    return (<> 
- {props.info.filter(card => card.price < card.rawPrice).map(card =>
-         <Grid item> 
-       
-         <Card className='card' body={card.name} key={card.id}>
-         
-        <div className='card-image-wrap'><a href={card.href} ><Card.Img alt={card.name} src={card.imageUrl}/></a> </div>
-        <Card.Body>
-        <Card.Title><TextTruncate
-    line={3}
-    element="span"
-    truncateText="…"
-    text={card.name}
-    textTruncateChild={<span>Подробнее</span>}
-/></Card.Title>
+  return (
+    <>
+      {props.info
+        .filter((card) => card.price < card.rawPrice)
+        .map((card) => (
+          <div className="card" body={card.name} key={card.id}>
+            <div className="card-image-wrap">
+              <img className="product" alt={card.name} src={card.imageUrl} />
+            </div>
+            <p className="name">{card.name} </p>
+            <div className="small">
+              
 
-        <div style={{fontSize: '20px'}}>
-          <b>{card.price} ₽ </b>
-       <p >
-         <s>{card.rawPrice} ₽</s> Скидка <b>{Math.floor((1-(card.price/card.rawPrice))*100)}%</b>
-         </p></div></Card.Body>
-         </Card>
-         
-        </Grid>)}
-</>
-
-    )
+              <div>
+                <b className="price">{card.price} ₽ </b>
+                <p className="raw-price">
+                  <s>{card.rawPrice} ₽</s>
+                </p>
+                <snap className="discount">
+                  <b>-{Math.floor((1 - card.price / card.rawPrice) * 100)}%</b>
+                </snap>
+                <a href={card.href}>
+                  <img
+                    className="logo"
+                    src="https://upload.wikimedia.org/wikipedia/commons/5/50/Riv_gosh_1.jpg"
+                    alt="Rive Gauche"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+    </>
+  );
 }
-
 
 export default CustomCard;
