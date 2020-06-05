@@ -23,7 +23,7 @@ function CustomCard(props) {
                 <snap className="discount">
                   <b>-{Math.floor((1 - card.price / card.rawPrice) * 100)}%</b>
                 </snap>
-                <a href={card.href}>
+                <a href={card.href} target="_blank">
                   <img
                     className="logo"
                     src="https://upload.wikimedia.org/wikipedia/commons/5/50/Riv_gosh_1.jpg"
