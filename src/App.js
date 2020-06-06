@@ -19,6 +19,7 @@ class App extends React.Component {
       brands: [],
       query: "",
       isSelected: {},
+      isLoading: 'Load more'
     };
 
     this.sortByPrice = this.sortByPrice.bind(this);
@@ -32,6 +33,7 @@ class App extends React.Component {
     this.setCurrentPage = this.setCurrentPage.bind(this);
     this.setFilteredInfo = this.setFilteredInfo.bind(this);
     this.handleAll = this.handleAll.bind(this);
+    this.loadMore = this.loadMore.bind(this)
   }
 
   componentDidMount() {
@@ -149,7 +151,6 @@ class App extends React.Component {
     for (let i = 0; i < filters.length; i++) {
       arrs.push(data.filter((item) => item.brand === filters[i]));
     }
-    console.log(arrs);
     arrs = arrs.flat();
     this.setState(
       {
@@ -264,7 +265,6 @@ class App extends React.Component {
   }
 
   handlePageChange(pageNumber) {
-    console.log(`active page is ${pageNumber}`);
     this.setState({
       activePage: pageNumber,
     });
@@ -295,6 +295,12 @@ class App extends React.Component {
     );
   }
 
+  loadMore (event) {
+    let items = this.state.itemsPerPage  
+    this.setState({itemsPerPage: items+ 8}, () => this.renderNewPage(this.state))
+    console.log('loaded')
+  }
+
   render() {
     return (
       <div className="App">
@@ -318,19 +324,21 @@ class App extends React.Component {
               </h3>
             )}{" "}
             {this.state.filteredInfo.length > this.state.itemsPerPage ? (
-              <Pagination
-                postsPerPage={this.state.itemsPerPage}
-                totalPosts={this.state.filteredInfo.length}
-                paginate={this.setCurrentPage}
-                currentPage={this.state.activePage}
-              />
+              <button onClick={this.loadMore}>{this.state.isLoading}</button>
+              // <Pagination
+              //   postsPerPage={this.state.itemsPerPage}
+              //   totalPosts={this.state.filteredInfo.length}
+              //   paginate={this.setCurrentPage}
+              //   currentPage={this.state.activePage}
+              // />
             ) : (
               <div />
             )}
           </div>
         </div>
       </div>
-    );
+    )
+    ;
   }
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import TextTruncate from "react-text-truncate";
+import Truncate from 'react-truncate';
 
 function CustomCard(props) {
   return (
@@ -11,19 +11,18 @@ function CustomCard(props) {
             <div className="card-image-wrap">
               <img className="product" alt={card.name} src={card.imageUrl} />
             </div>
-            <p className="name">{card.name} </p>
+            <p className="name"><Truncate lines={2} ellipsis={<span></span>}>
+                {card.name}
+            </Truncate> </p>
             <div className="small">
-              
-
-              <div>
                 <b className="price">{card.price} ₽ </b>
-                <p className="raw-price">
+                <span className="raw-price">
                   <s>{card.rawPrice} ₽</s>
-                </p>
+                </span>
                 <snap className="discount">
                   <b>-{Math.floor((1 - card.price / card.rawPrice) * 100)}%</b>
                 </snap>
-                <a href={card.href} target="_blank">
+                <a href={card.href} target="_blank" rel="noopener noreferrer">
                   <img
                     className="logo"
                     src="https://upload.wikimedia.org/wikipedia/commons/5/50/Riv_gosh_1.jpg"
@@ -32,7 +31,7 @@ function CustomCard(props) {
                 </a>
               </div>
             </div>
-          </div>
+          // </div>
         ))}
     </>
   );

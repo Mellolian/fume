@@ -30,15 +30,15 @@
   .cards {
     position: absolute;
     width: 100%;
-    justify-content: center;
+justify-content: space-evenly;
     top: 12%;
-    padding: 2%;
+    padding: 1%;
     display: flex;
     flex-wrap: wrap;
+
   }
 
-  .sidenav,
-  .form-control {
+  .sidenav {
     display: none;
   }
   #desktop {
@@ -52,8 +52,8 @@
   }
 
   .card {
-    height: 300px;
-    margin-bottom: 15px;
+    height: 250px;
+    /* margin-bottom: 15px; */
     flex: 0 0 50%;
     position: relative;
     display: block;
@@ -64,27 +64,31 @@
     justify-content: center;
     float: left;
   }
-  .card:hover {
+  /* .card:hover {
     border: 3px solid rgb(51, 153, 127);
-  }
+  } */
 
   .small {
-    margin: 0 auto;
-    position: absolute;
+    /* margin: 0 auto; */
+    width: 100%;
+    position: relative;
     height: 30%;
+    float: left;
+    display: flex;
     /* height: 30%; */
     font-size: 20%;
-    padding: 5px;
-    bottom: 0;
+    /* padding: 5px; */
+    flex-direction: column;
+    /* bottom: 0; */
   } 
 
   .name {
-    font-family: Montserrat;
+    font-family: Roboto;
     font-style: normal;
     font-weight: bold;
     font-size: 12px;
     line-height: 125%;
-
+    margin-bottom: 0px;
     text-align: center;
   }
 
@@ -93,7 +97,7 @@
 font-style: normal;
 font-weight: bold;
 font-size: 18px;
-text-align: center;
+/* text-align: center; */
 }
 
 .raw-price {
@@ -112,6 +116,7 @@ text-decoration-line: line-through;
 font-style: italic;
 font-weight: bold;
 font-size: 20px;
+
 }
 
   .h5,
@@ -144,8 +149,14 @@ font-size: 20px;
   }
 
   .logo {
+    position: absolute;
+    display: inline-flex;
       max-width: 50%;
-      float: right;
+    bottom: 0;
+    left: 50%;
+    /* left: 100% */
+    
+      /* align-self */
 
   }
 
@@ -161,7 +172,7 @@ font-size: 20px;
   }
 }
 
-/* @media only screen and (min-width: 768px) {
+@media only screen and (min-width: 768px) {
 
 
-} */
+}

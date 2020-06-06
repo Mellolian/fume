@@ -19,8 +19,7 @@ function Pagination(props) {
     } else {
       lastPage = Math.ceil(props.totalPosts / props.postsPerPage);
     }
-    console.log(firstPage);
-    console.log(lastPage);
+
     for (let i = firstPage; i <= lastPage; i++) {
       pageNumbers.push(i);
     }
@@ -42,7 +41,7 @@ function Pagination(props) {
     }
   }
 
-  console.log(pageNumbers);
+ 
   return (
     <nav>
       <ul className="pagination">
