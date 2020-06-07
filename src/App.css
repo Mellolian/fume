@@ -17,25 +17,33 @@
     margin-left: -15px;
   }
 
-  .navbar {
+  .Navbar {
     z-index: 10;
     top: 0;
     position: fixed;
     background-color: #00ffcc;
     height: 10%;
     width: 100%;
+    display: flex;
+    align-items: center;
     /* border: 2px solid #169f84; */
+  }
+
+  .search {
+    width: 100%;
+    display: flex;
+    height: 40%;
+    margin-left: 20%;
   }
 
   .cards {
     position: absolute;
     width: 100%;
-justify-content: space-evenly;
+    justify-content: space-evenly;
     top: 12%;
     padding: 1%;
     display: flex;
     flex-wrap: wrap;
-
   }
 
   .sidenav {
@@ -60,7 +68,7 @@ justify-content: space-evenly;
     border: 3px solid rgba(0, 0, 0, 0);
     max-width: 45%;
     width: 45%;
-    font-family: "Montserrat";
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     justify-content: center;
     float: left;
   }
@@ -80,44 +88,43 @@ justify-content: space-evenly;
     /* padding: 5px; */
     flex-direction: column;
     /* bottom: 0; */
-  } 
+  }
 
   .name {
     font-family: Roboto;
     font-style: normal;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 1rem;
     line-height: 125%;
     margin-bottom: 0px;
     text-align: center;
   }
 
-.price {
+  .price {
     font-family: Roboto;
-font-style: normal;
-font-weight: bold;
-font-size: 18px;
-/* text-align: center; */
-}
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1rem;
+    /* text-align: center; */
+  }
 
-.raw-price {
+  .raw-price {
     font-family: Roboto;
-font-style: normal;
-font-weight: bold;
-font-size: 12px;
-margin: 0;
-/* identical to box height, or 250% */
-/* text-align: center; */
-text-decoration-line: line-through;
-}
+    font-style: normal;
+    font-weight: bold;
+    font-size: 0.5rem;
+    margin: 0;
+    /* identical to box height, or 250% */
+    /* text-align: center; */
+    text-decoration-line: line-through;
+  }
 
-.discount {
+  .discount {
     font-family: Roboto;
-font-style: italic;
-font-weight: bold;
-font-size: 20px;
-
-}
+    font-style: italic;
+    font-weight: bold;
+    font-size: 1rem;
+  }
 
   .h5,
   h5 {
@@ -130,7 +137,6 @@ font-size: 20px;
   }
 
   .card-image-wrap {
-    
     height: 50%;
     margin: 0 auto;
     max-width: 100%;
@@ -143,7 +149,7 @@ font-size: 20px;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     max-height: 100%;
     max-width: 100%;
   }
@@ -151,13 +157,9 @@ font-size: 20px;
   .logo {
     position: absolute;
     display: inline-flex;
-      max-width: 50%;
+    max-width: 50%;
     bottom: 0;
     left: 50%;
-    /* left: 100% */
-    
-      /* align-self */
-
   }
 
   .pagination {
@@ -167,12 +169,244 @@ font-size: 20px;
     bottom: 0;
   }
 
-  nav {
-    position: relative;
+  .form-control {
+    font-size: 1.5rem;
+    display: flex;
+    vertical-align: middle;
+    width: 50%;
+    height: 100%;
   }
+
 }
 
 @media only screen and (min-width: 768px) {
+  body {
+    /* width: 100%; */
+    height: 100%;
+  }
+
+  #mobile {
+    display: none;
+  }
+
+  .container {
+    position: absolute;
+    height: 90%;
+    width: 100%;
+    top: 10%;
+    /* align-self: center; */
+    display: flex;
+  }
+
+  .cards {
+    /* border: 3px solid #000; */
+    position: absolute;
+    width: 85%;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    bottom: 0%;
+    right: 0;
+  }
+
+  .card {
+    flex-direction: column;
+    height: 45%;
+    margin-bottom: 15px;
+    /* flex: 0 0 50%; */
+    position: relative;
+    display: flex;
+    border: 3px solid rgba(190, 190, 190, 0);
+    max-width: 25%;
+    width: 25%;
+    padding: 1px;
+    font-family: "Montserrat";
+  }
+
+  .card-image-wrap {
+    height: 60%;
+    width: auto;
+    margin: 0 auto;
+    max-width: 100%;
+    position: relative;
+    display: flex;
+    /* flex: 1 0 auto; */
+  }
+
+  .product {
+    margin: 0 auto;
+    display: flex;
+    /* position: relative; */
+    max-height: 100%;
+    max-width: 100%;
+    align-self: center;
+  }
+
+  .small {
+    margin-top: 1%;
+    margin-left: 15%;
+    width: auto;
+    position: relative;
+    height: 30%;
+    float: left;
+    display: flex;
+    align-items: flex-start;
+    font-size: 20%;
+
+    flex-direction: column;
+
+  }
+
+  .name {
+    margin: 0;
+    font-family: Roboto;
+    font-weight: bold;
+    font-size: 1rem;
+    line-height: 125%;
+    margin-bottom: 0px;
+    text-align: center;
+  }
+
+  .price {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1rem;
+    /* text-align: center; */
+  }
+
+  .raw-price {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 0.7rem;
+    margin: 0;
+    /* identical to box height, or 250% */
+    /* text-align: center; */
+    text-decoration-line: line-through;
+  }
+
+  .discount {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .card-title h5 {
+    margin-bottom: 10%;
+  }
 
 
+  .Navbar {
+    background-color: #00ffcc;
+    height: 10%;
+    position: fixed;
+    z-index: 10;
+    border: 2px solid #169f84;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  #desktop {
+    display: flex;
+    margin-left: 100px;
+    font-size: 56px;
+  }
+
+  .form {
+    height: 100%;
+  }
+
+  .search {
+    width: 100%;
+    display: flex;
+    height: 40%;
+    margin-left: 20%;
+  }
+
+
+
+  .form-control {
+    font-size: 1.5rem;
+    display: flex;
+    vertical-align: middle;
+    width: 50%;
+    height: 100%;
+  }
+
+  .sidenav {
+    padding-top: 2%;
+    border-right: 2px solid gray;
+    height: 90%;
+    width: 15%;
+    margin-bottom: 0;
+    /* margin-top: auto; */
+    /* float: left; */
+    left: 0;
+    position: fixed;
+    bottom: 0;
+    top: 10%;
+    z-index: 1;
+    background-color: #fff;
+    overflow-x: auto;
+  }
+
+  .sidenav form {
+    height: 90%;
+    /* float: left; */
+    /* color: aliceblue; */
+    font-family: Helvetica;
+  }
+
+  .sidenav h5 {
+    margin-left: 10%;
+  }
+
+  .sidenav label {
+    margin-left: 10%;
+    font-size: 15px;
+  }
+
+  #not-found {
+    position: relative;
+    margin-left: 20%;
+  }
+
+
+
+  a {
+    text-decoration: none; /* Убираем подчеркивание у ссылок */
+    color: #000;
+  }
+
+  a:hover {
+    text-decoration: none; /* Убираем подчеркивание у ссылок */
+    color: #000;
+  }
+
+  .logo {
+    position: absolute;
+    display: inline-flex;
+    max-width: 50%;
+    bottom: 0;
+    left: 50%;
+  }
+
+  .form-inline {
+    margin: 0 auto;
+  }
+
+  .pagination {
+    float: left;
+    margin-left: 50%;
+  }
+
+  .btn {
+    height: 5%;
+  }
 }

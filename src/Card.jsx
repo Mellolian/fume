@@ -11,7 +11,7 @@ function CustomCard(props) {
             <div className="card-image-wrap">
               <img className="product" alt={card.name} src={card.imageUrl} />
             </div>
-            <p className="name"><Truncate lines={2} ellipsis={<span></span>}>
+            <p className="name"><Truncate lines={2} ellipsis={<span>.</span>}>
                 {card.name}
             </Truncate> </p>
             <div className="small">

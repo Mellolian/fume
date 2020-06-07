@@ -3,7 +3,6 @@ import CustomCard from "./Card";
 import data from "./data.json";
 import CustomNavbar from "./Navbar";
 import Pagination from "./Pagination";
-import { Grid } from "@material-ui/core";
 import Sidenav from "./Sidenav";
 import "./App.css";
 
@@ -30,7 +29,7 @@ class App extends React.Component {
     this.renderNewPage = this.renderNewPage.bind(this);
     this.setFilters = this.setFilters.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
-    this.setCurrentPage = this.setCurrentPage.bind(this);
+
     this.setFilteredInfo = this.setFilteredInfo.bind(this);
     this.handleAll = this.handleAll.bind(this);
     this.loadMore = this.loadMore.bind(this)
@@ -139,9 +138,7 @@ class App extends React.Component {
     this.setState(
       {
         filters: validFilters,
-      },
-      () => console.log(this.state.filters)
-    );
+      });
 
     return validFilters;
   }
@@ -155,9 +152,7 @@ class App extends React.Component {
     this.setState(
       {
         filteredInfo: arrs,
-      },
-      () => console.log(arrs)
-    );
+      });
     return arrs;
   }
 
@@ -194,13 +189,11 @@ class App extends React.Component {
         {
           filteredInfo: arrs,
           activePage: 1,
+          itemsPerPage: 8,
         },
         () => this.renderNewPage(this.state)
       );
     } else if (filters.length == 0 && query !== "") {
-      console.log(filters);
-      console.log("only query");
-      console.log("query is " + query + " wtf?");
       arrs = data.filter(
         (piece) => piece.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
       );
@@ -209,6 +202,7 @@ class App extends React.Component {
         {
           filteredInfo: arrs,
           activePage: 1,
+          itemsPerPage: 8,
         },
         () => this.renderNewPage(this.state)
       );
@@ -224,6 +218,7 @@ class App extends React.Component {
       this.setState(
         {
           filteredInfo: arrs,
+          itemsPerPage: 8,
         },
         () => this.renderNewPage(this.state)
       );
@@ -237,6 +232,7 @@ class App extends React.Component {
       this.setState(
         {
           filteredInfo: arrs,
+          itemsPerPage: 8,
         },
         () => this.renderNewPage(this.state)
       );
@@ -248,6 +244,7 @@ class App extends React.Component {
       this.setState(
         {
           filteredInfo: data,
+          itemsPerPage: 8,
         },
         () => this.renderNewPage(this.state)
       );
@@ -271,7 +268,6 @@ class App extends React.Component {
   }
 
   renderNewPage(newState) {
-    console.log(newState.filteredInfo);
     this.setState(
       {
         page: newState.filteredInfo
@@ -285,15 +281,14 @@ class App extends React.Component {
     );
   }
 
-  setCurrentPage(event) {
-    console.log(event.target.name);
-    this.setState(
-      {
-        activePage: parseInt(event.target.name),
-      },
-      () => this.renderNewPage(this.state)
-    );
-  }
+  // setCurrentPage(event) {
+  //   this.setState(
+  //     {
+  //       activePage: parseInt(event.target.name),
+  //     },
+  //     () => this.renderNewPage(this.state)
+  //   );
+  // }
 
   loadMore (event) {
     let items = this.state.itemsPerPage  
@@ -324,7 +319,7 @@ class App extends React.Component {
               </h3>
             )}{" "}
             {this.state.filteredInfo.length > this.state.itemsPerPage ? (
-              <button onClick={this.loadMore}>{this.state.isLoading}</button>
+              <button className='btn' onClick={this.loadMore}>Показать еще</button>
               // <Pagination
               //   postsPerPage={this.state.itemsPerPage}
               //   totalPosts={this.state.filteredInfo.length}

@@ -20,15 +20,14 @@ class Search extends Component {
   render() {
     
     return (
-      <form style={{width: '100%'}}>
+      <form className='form' style={{width: '100%'}}>
         <input 
         className="form-control"
         type="text"
           placeholder="Поиск"
-          // ref={input => {this.search = input}}
           onChange={this.props.handleInputChange}
         />
-        <p>{this.state.query}</p>
+
       </form>
     )
   }
