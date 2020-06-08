@@ -239,8 +239,8 @@
     position: relative;
     display: flex;
     border: 3px solid rgba(190, 190, 190, 0);
-    max-width: 33%;
-    width: 33%;
+    max-width: 25%;
+    width: 25%;
     padding: 1px;
     font-family: "Montserrat";
   }
@@ -287,7 +287,7 @@
     font-size: 1rem;
     margin-bottom: 5%;
     text-align: center;
-    height: 2rem;
+    max-height: 2rem;
 
   }
 
