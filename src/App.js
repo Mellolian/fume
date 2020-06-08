@@ -13,7 +13,7 @@ class App extends React.Component {
       info: data,
       page: [],
       activePage: 1,
-      itemsPerPage: 8,
+      itemsPerPage: 12,
       filteredInfo: data,
       brands: [],
       query: "",
@@ -280,7 +280,7 @@ class App extends React.Component {
 
   loadMore (event) {
     let items = this.state.itemsPerPage  
-    this.setState({itemsPerPage: items+ 8}, () => this.renderNewPage(this.state))
+    this.setState({itemsPerPage: items+ 12}, () => this.renderNewPage(this.state))
   }
 
   render() {
