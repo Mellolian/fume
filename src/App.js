@@ -3,7 +3,6 @@ import CustomCard from "./Card";
 import data from "./data.json";
 import CustomNavbar from "./Navbar";
 import Pagination from "./Pagination";
-import { Grid } from "@material-ui/core";
 import Sidenav from "./Sidenav";
 import "./App.css";
 
@@ -14,11 +13,12 @@ class App extends React.Component {
       info: data,
       page: [],
       activePage: 1,
-      itemsPerPage: 8,
+      itemsPerPage: 12,
       filteredInfo: data,
       brands: [],
       query: "",
       isSelected: {},
+      isLoading: 'Load more'
     };
 
     this.sortByPrice = this.sortByPrice.bind(this);
@@ -29,9 +29,10 @@ class App extends React.Component {
     this.renderNewPage = this.renderNewPage.bind(this);
     this.setFilters = this.setFilters.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
-    this.setCurrentPage = this.setCurrentPage.bind(this);
+
     this.setFilteredInfo = this.setFilteredInfo.bind(this);
     this.handleAll = this.handleAll.bind(this);
+    this.loadMore = this.loadMore.bind(this)
   }
 
   componentDidMount() {
@@ -82,7 +83,6 @@ class App extends React.Component {
 
   sortByName() {
     let array = this.state.info;
-    console.log(array);
     array.sort((a, b) => {
       if (a.brand.toLowerCase() < b.brand.toLowerCase()) return -1;
       if (a.brand.toLowerCase() > b.brand.toLowerCase()) return 1;
@@ -103,22 +103,19 @@ class App extends React.Component {
   }
 
   handleInputChange = (e) => {
-
-    let query ='';
+    let query = "";
 
     if (e.target.value.length > 0) {
-      console.log("handleInputChange");
-      query = (e.target.value);
+
+      query = e.target.value;
       this.setState({
         query: e.target.value,
       });
     } else if (e.target.value == 0) {
-        let query= ''
-        this.setState({
-            query: query
-        })
-      console.log("handleInputChange");
-      console.log(this.state.query);
+      let query = "";
+      this.setState({
+        query: query,
+      });
     }
     return query;
   };
@@ -134,12 +131,13 @@ class App extends React.Component {
     validFilters = Object.keys(this.state.isSelected).filter(
       (key) => this.state.isSelected[key]
     );
-    console.log(validFilters);
-    this.setState({
-      filters: validFilters,
-    }, () => console.log(this.state.filters));
-    
-    return validFilters
+
+    this.setState(
+      {
+        filters: validFilters,
+      });
+
+    return validFilters;
   }
 
   setFilteredInfo(filters) {
@@ -147,12 +145,12 @@ class App extends React.Component {
     for (let i = 0; i < filters.length; i++) {
       arrs.push(data.filter((item) => item.brand === filters[i]));
     }
-    console.log(arrs);
     arrs = arrs.flat();
-    this.setState({
-      filteredInfo: arrs,
-    }, () => console.log(arrs));
-    return arrs
+    this.setState(
+      {
+        filteredInfo: arrs,
+      });
+    return arrs;
   }
 
   handleAll(e) {
@@ -162,69 +160,70 @@ class App extends React.Component {
     let arrs = this.state.filteredInfo;
 
     if (e.target.type === "checkbox") {
-      console.log("checkbox");
+
       filters = this.handleCheckboxChange(e);
-      this.setState({
-        filters: filters,
-      }, () => console.log(filters));
+      this.setState(
+        {
+          filters: filters,
+        });
     } else if (e.target.type === "text") {
-      console.log("text");
+
       query = this.handleInputChange(e);
-      console.log(query);
+
       this.setState({
         query: query,
       });
-      console.log(query);
+
     }
 
-    if (filters !== undefined && filters.length > 0 && query == '') {
-      console.log("only filters");
-      console.log(filters)
-      arrs = this.setFilteredInfo(filters);
-      this.setState({
-        filteredInfo: arrs,
-        activePage: 1,
-      },
-      () => this.renderNewPage(this.state));
+    if (filters !== undefined && filters.length > 0 && query == "") {
 
-    } else if (filters.length == 0 && query !== '') {
-        console.log(filters)
-      console.log("only query");
-      console.log('query is '+ query +' wtf?')
+      arrs = this.setFilteredInfo(filters);
+      this.setState(
+        {
+          filteredInfo: arrs,
+          activePage: 1,
+          itemsPerPage: 8,
+        },
+        () => this.renderNewPage(this.state)
+      );
+    } else if (filters.length == 0 && query !== "") {
       arrs = data.filter(
         (piece) => piece.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
       );
-      console.log(arrs);
-      this.setState({
-        filteredInfo: arrs,
-        activePage: 1,
-      },
-      () => this.renderNewPage(this.state));
 
-    } else if ((filters.length == 0 || filters == undefined) && query == '') {
+      this.setState(
+        {
+          filteredInfo: arrs,
+          activePage: 1,
+          itemsPerPage: 8,
+        },
+        () => this.renderNewPage(this.state)
+      );
+    } else if ((filters.length == 0 || filters == undefined) && query == "") {
       arrs = data;
-      console.log("blank result");
 
     } else if (filters.length > 0 && query.length > 0) {
-      console.log("both filters and query");
+
       arrs = data.filter(
         (piece) => piece.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
       );
       arrs = arrs.filter((item) => filters.includes(item.brand));
-      this.setState({
-        filteredInfo: arrs,
-      },
-      () => this.renderNewPage(this.state));
-    }
-
-    console.log("result is");
-    console.log(arrs);
-
-    if (arrs !== undefined && arrs.length > 0) {
-      console.log(arrs);
       this.setState(
         {
           filteredInfo: arrs,
+          itemsPerPage: 8,
+        },
+        () => this.renderNewPage(this.state)
+      );
+    }
+
+    if (arrs !== undefined && arrs.length > 0) {
+
+      this.setState(
+        {
+          filteredInfo: arrs,
+          itemsPerPage: 8,
         },
         () => this.renderNewPage(this.state)
       );
@@ -232,11 +231,13 @@ class App extends React.Component {
       (filters == [] || filters == undefined) &&
       this.state.query.length === 0
     ) {
-      console.log("clearing all filters");
-      this.setState({
-        filteredInfo: data,
-      },
-      () => this.renderNewPage(this.state));
+      this.setState(
+        {
+          filteredInfo: data,
+          itemsPerPage: 8,
+        },
+        () => this.renderNewPage(this.state)
+      );
     }
   }
 
@@ -251,14 +252,12 @@ class App extends React.Component {
   }
 
   handlePageChange(pageNumber) {
-    console.log(`active page is ${pageNumber}`);
     this.setState({
       activePage: pageNumber,
     });
   }
 
   renderNewPage(newState) {
-    console.log(newState.filteredInfo);
     this.setState(
       {
         page: newState.filteredInfo
@@ -266,53 +265,62 @@ class App extends React.Component {
           .slice(
             (newState.activePage - 1) * newState.itemsPerPage,
             newState.activePage * newState.itemsPerPage
-          )
-      },
-      () =>
-        console.log(this.state)
-
-    );
+          ),
+      });
   }
 
-  setCurrentPage(event) {  
+  // setCurrentPage(event) {
+  //   this.setState(
+  //     {
+  //       activePage: parseInt(event.target.name),
+  //     },
+  //     () => this.renderNewPage(this.state)
+  //   );
+  // }
 
-    console.log((event.target.name))
-    this.setState({
-      activePage: parseInt(event.target.name),
-    }, () => this.renderNewPage(this.state));
+  loadMore (event) {
+    let items = this.state.itemsPerPage  
+    this.setState({itemsPerPage: items+ 12}, () => this.renderNewPage(this.state))
   }
 
   render() {
-    
     return (
       <div className="App">
         <CustomNavbar
           info={this.state.filteredInfo}
           handleInputChange={this.handleAll}
-        />{" "}
-        <Sidenav
-          info={this.state.info}
-          git revert HEAD          handleCheckboxChange={this.handleAll}
-          isSelected={this.state.isSelected}
-        />{" "}
-        <div className="main">
-          {" "}
-          <Grid container spacing={2} justify="space-evenly">
-           {this.state.page.length > 0 ? <CustomCard info={this.state.page} /> : <h3 id='not-found'>К сожалению, товаров соответствующих условиям не найдено.</h3>}
-          </Grid>{" "}
+        />
+
+        <div className="container">
+          <Sidenav
+            info={this.state.info}
+            handleCheckboxChange={this.handleAll}
+            isSelected={this.state.isSelected}
+          />{" "}
+          <div className="cards">
+            {this.state.page.length > 0 ? (
+              <CustomCard info={this.state.page} />
+            ) : (
+              <h3 id="not-found">
+                К сожалению, товаров соответствующих условиям не найдено.
+              </h3>
+            )}{" "}
+            {this.state.filteredInfo.length > this.state.itemsPerPage ? (
+              <button className='btn' onClick={this.loadMore}>Показать еще</button>
+              // <Pagination
+              //   postsPerPage={this.state.itemsPerPage}
+              //   totalPosts={this.state.filteredInfo.length}
+              //   paginate={this.setCurrentPage}
+              //   currentPage={this.state.activePage}
+              // />
+            ) : (
+              <div />
+            )}
+          </div>
         </div>
-        {this.state.filteredInfo.length > this.state.itemsPerPage ? (
-          <Pagination
-            postsPerPage={this.state.itemsPerPage}
-            totalPosts={this.state.filteredInfo.length}
-            paginate={this.setCurrentPage}
-            currentPage={this.state.activePage}
-          />
-        ) : (
-          <div />
-        )}{" "}
       </div>
-    );
+    )
+    ;
   }
 }
 
