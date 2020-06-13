@@ -1,24 +1,32 @@
 import React from "react";
 import CustomCard from "./Card";
-import data from "./data.json";
+// import data from "./data.json";
 import CustomNavbar from "./Navbar";
 import Pagination from "./Pagination";
 import Sidenav from "./Sidenav";
 import "./App.css";
 
+let data = [];
+
+async function getData(url) {
+  let response = await fetch(url);
+  let catalogue = await response.json();
+  return catalogue;
+}
+data = getData("http://localhost:5000/init");
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      info: data,
+      info: [],
       page: [],
       activePage: 1,
       itemsPerPage: 12,
-      filteredInfo: data,
+      filteredInfo: [],
       brands: [],
       query: "",
       isSelected: {},
-      isLoading: 'Load more'
+      isLoading: "Load more",
     };
 
     this.sortByPrice = this.sortByPrice.bind(this);
@@ -32,19 +40,24 @@ class App extends React.Component {
 
     this.setFilteredInfo = this.setFilteredInfo.bind(this);
     this.handleAll = this.handleAll.bind(this);
-    this.loadMore = this.loadMore.bind(this)
+    this.loadMore = this.loadMore.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    data = await getData("http://localhost:5000/init");
+    this.setState({ info: data });
     this.setState({
-      page: data
+      page: this.state.info
         .filter((card) => card.price < card.rawPrice)
         .slice(0, this.state.itemsPerPage),
     });
 
     this.setState({
       filters: [],
+      filteredInfo: data
     });
+    data = await getData("http://localhost:5000/");
+    this.setState({ info: data }, () => this.renderNewPage(this.state));
   }
 
   sortByPrice() {
@@ -106,7 +119,6 @@ class App extends React.Component {
     let query = "";
 
     if (e.target.value.length > 0) {
-
       query = e.target.value;
       this.setState({
         query: e.target.value,
@@ -132,10 +144,9 @@ class App extends React.Component {
       (key) => this.state.isSelected[key]
     );
 
-    this.setState(
-      {
-        filters: validFilters,
-      });
+    this.setState({
+      filters: validFilters,
+    });
 
     return validFilters;
   }
@@ -146,10 +157,9 @@ class App extends React.Component {
       arrs.push(data.filter((item) => item.brand === filters[i]));
     }
     arrs = arrs.flat();
-    this.setState(
-      {
-        filteredInfo: arrs,
-      });
+    this.setState({
+      filteredInfo: arrs,
+    });
     return arrs;
   }
 
@@ -160,24 +170,19 @@ class App extends React.Component {
     let arrs = this.state.filteredInfo;
 
     if (e.target.type === "checkbox") {
-
       filters = this.handleCheckboxChange(e);
-      this.setState(
-        {
-          filters: filters,
-        });
+      this.setState({
+        filters: filters,
+      });
     } else if (e.target.type === "text") {
-
       query = this.handleInputChange(e);
 
       this.setState({
         query: query,
       });
-
     }
 
     if (filters !== undefined && filters.length > 0 && query == "") {
-
       arrs = this.setFilteredInfo(filters);
       this.setState(
         {
@@ -202,9 +207,7 @@ class App extends React.Component {
       );
     } else if ((filters.length == 0 || filters == undefined) && query == "") {
       arrs = data;
-
     } else if (filters.length > 0 && query.length > 0) {
-
       arrs = data.filter(
         (piece) => piece.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
       );
@@ -219,7 +222,6 @@ class App extends React.Component {
     }
 
     if (arrs !== undefined && arrs.length > 0) {
-
       this.setState(
         {
           filteredInfo: arrs,
@@ -258,15 +260,14 @@ class App extends React.Component {
   }
 
   renderNewPage(newState) {
-    this.setState(
-      {
-        page: newState.filteredInfo
-          .filter((card) => card.price < card.rawPrice)
-          .slice(
-            (newState.activePage - 1) * newState.itemsPerPage,
-            newState.activePage * newState.itemsPerPage
-          ),
-      });
+    this.setState({
+      page: newState.filteredInfo
+        .filter((card) => card.price < card.rawPrice)
+        .slice(
+          (newState.activePage - 1) * newState.itemsPerPage,
+          newState.activePage * newState.itemsPerPage
+        ),
+    });
   }
 
   // setCurrentPage(event) {
@@ -278,9 +279,11 @@ class App extends React.Component {
   //   );
   // }
 
-  loadMore (event) {
-    let items = this.state.itemsPerPage  
-    this.setState({itemsPerPage: items+ 12}, () => this.renderNewPage(this.state))
+  loadMore(event) {
+    let items = this.state.itemsPerPage;
+    this.setState({ itemsPerPage: items + 12 }, () =>
+      this.renderNewPage(this.state)
+    );
   }
 
   render() {
@@ -306,21 +309,15 @@ class App extends React.Component {
               </h3>
             )}{" "}
             {this.state.filteredInfo.length > this.state.itemsPerPage ? (
-              <button className='btn' onClick={this.loadMore}>Показать еще</button>
-              // <Pagination
-              //   postsPerPage={this.state.itemsPerPage}
-              //   totalPosts={this.state.filteredInfo.length}
-              //   paginate={this.setCurrentPage}
-              //   currentPage={this.state.activePage}
-              // />
-            ) : (
-              <div />
+              <button className="btn" onClick={this.loadMore}>
+                Показать еще
+              </button>
+            ) : (              <div />
             )}
           </div>
         </div>
       </div>
-    )
-    ;
+    );
   }
 }
 
