@@ -5,7 +5,7 @@ function CustomCard(props) {
   return (
     <>
       {props.info
-        .filter((card) => card.price < card.rawPrice)
+        // .filter((card) => card.price < card.rawPrice)
         .map((card) => (
           <div className="card" body={card.name} key={card.id}>
             <div className="card-image-wrap">

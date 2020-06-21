@@ -4,15 +4,16 @@ import Checkbox from "./Checkbox";
 
 export default function Sidenav(props) {
   let arr = [];
+  // const listToDisplay = Brands(props.brands)
   const listToDisplay = (props) => {
-    Object.keys(Brands(props)).forEach((key) =>
+    Object.keys(Brands(props.brands)).forEach((key) =>
       arr.push(
         <p key={key}>
           <Checkbox
             label={key}
             handleCheckboxChange={props.handleCheckboxChange}
             isSelected={props.isSelected}
-            length={Brands(props)[key].length}
+            length={Brands(props.brands)[key]}
           />
         </p>
       )
