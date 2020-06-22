@@ -23,11 +23,11 @@ function CustomCard(props) {
                 <p className="price">{card.price} ₽</p>
 
                 <p className="raw-price">
-                  <s>{card.rawPrice} ₽</s>
+                  {card.rawPrice ? (<s>{card.rawPrice} ₽</s>) : <div/>}
                 </p>
-                <p className="discount">
+                {card.rawPrice ? (<p className="discount">
                   -{Math.floor((1 - card.price / card.rawPrice) * 100)}%
-                </p>
+                </p>) : <div/>}
 
                 <p className="logo-container"><a href={card.href} target="_blank" rel="noopener noreferrer">
                   <img
