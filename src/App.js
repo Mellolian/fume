@@ -30,6 +30,7 @@ class App extends React.Component {
       isSelected: {},
       filters: [],
       Url: "https://fume-backend.herokuapp.com/",
+      isLoading: true
     };
 
     // this.sortByPrice = this.sortByPrice.bind(this);
@@ -53,12 +54,14 @@ class App extends React.Component {
         info: data,
         brands: brands,
         loadProducts: true,
+        isLoading: false,
       });
     } else {
       this.setState({
         info: data,
         brands: brands,
         loadProducts: false,
+        isLoading: false,
       });
     }
   }
@@ -268,10 +271,10 @@ class App extends React.Component {
           <div className="cards">
             {this.state.info.length > 0 ? (
               <CustomCard info={this.state.info} />
-            ) : (
-              <h3 id="not-found">
+            ) : ( this.state.isLoading ? (<h3 id="not-found">Загрузка...</h3>) :
+              (<h3 id="not-found">
                 К сожалению, товаров соответствующих условиям не найдено.
-              </h3>
+              </h3>)
             )}
 
             {this.state.loadProducts ? (
