@@ -24,7 +24,7 @@ function CustomCard(props) {
                 {card.price ? <p className="price">{card.price} ₽</p> : <div />}
 
                 <p className="raw-price">
-                  {card.rawPrice ? (
+                  {card.rawPrice > card.price ? (
                     card.price ? (
                       <s>{card.rawPrice} ₽</s>
                     ) : (
