@@ -1,5 +1,6 @@
 import React from "react";
 import Truncate from "react-truncate";
+import Logo from "./Logo";
 
 function CustomCard(props) {
   return (
@@ -20,22 +21,31 @@ function CustomCard(props) {
               </div>
 
               <div className="small">
-                <p className="price">{card.price} ₽</p>
+                {card.price ? <p className="price">{card.price} ₽</p> : <div />}
 
                 <p className="raw-price">
-                  {card.rawPrice ? (<s>{card.rawPrice} ₽</s>) : <div/>}
+                  {card.rawPrice ? (
+                    card.price ? (
+                      <s>{card.rawPrice} ₽</s>
+                    ) : (
+                      <span>{card.rawPrice} ₽</span>
+                    )
+                  ) : (
+                    <div />
+                  )}
                 </p>
-                {card.rawPrice ? (<p className="discount">
-                  -{Math.floor((1 - card.price / card.rawPrice) * 100)}%
-                </p>) : <div/>}
+                {Math.floor((1 - card.price / card.rawPrice) * 100) > 0 ? (
+                  <p className="discount">
+                    -{Math.floor((1 - card.price / card.rawPrice) * 100)}%
+                  </p>
+                ) : (
+                  <div />
+                )}
 
-                <p className="logo-container"><a href={card.href} target="_blank" rel="noopener noreferrer">
-                  <img
-                    className="logo"
-                    src="https://upload.wikimedia.org/wikipedia/commons/5/50/Riv_gosh_1.jpg"
-                    alt="Rive Gauche"
-                  />
-                </a>
+                <p className="logo-container">
+                  <a href={card.href} target="_blank" rel="noopener noreferrer">
+                    <Logo shop={card.shop} />
+                  </a>
                 </p>
               </div>
             </div>
