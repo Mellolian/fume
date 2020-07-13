@@ -25,5 +25,13 @@ export default function Logo(props) {
         alt="Sephora"
       />
     );
+  } else if (props.shop == "NYX") {
+    return (
+      <img
+        className="logo"
+        src="https://res-5.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_120,w_120,f_auto,b_white,q_auto:eco/v1403242863/ljqlvughy8fz86c9j5ed.png"
+        alt="NYX"
+      />
+    );
   }
 }
